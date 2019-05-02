@@ -1,16 +1,10 @@
 import React from 'react';
-import './App.css';
-import TopAppBar, {TopAppBarFixedAdjust} from '@material/react-top-app-bar';
-import '@material/react-top-app-bar/dist/top-app-bar.css';
+import './App.scss';
+import TopAppBar, {TopAppBarFixedAdjust, TopAppBarIcon, TopAppBarRow, TopAppBarSection, TopAppBarTitle} from '@material/react-top-app-bar';
 import MaterialIcon from '@material/react-material-icon';
-import '@material/react-material-icon/dist/material-icon.css';
-import "@material/react-drawer/dist/drawer.css";
 import Drawer, {DrawerAppContent, DrawerContent, DrawerHeader, DrawerTitle} from '@material/react-drawer';
 import List, {ListItem, ListItemGraphic, ListItemText} from '@material/react-list';
-import '@material/react-list/dist/list.css';
 import TextField, {HelperText, Input} from '@material/react-text-field';
-import '@material/react-text-field/dist/text-field.css';
-import '@material/react-typography/dist/typography.css';
 import {Headline5} from "@material/react-typography";
 
 class App extends React.Component {
@@ -40,7 +34,16 @@ class App extends React.Component {
                     </Drawer>
 
                     <DrawerAppContent className='drawer-app-content'>
-                        <TopAppBar title='Football' navigationIcon={<MaterialIcon icon='menu' onClick={() => this.setState({open: true})} />} />
+                        <TopAppBar>
+                            <TopAppBarRow>
+                                <TopAppBarSection align='start'>
+                                    <TopAppBarIcon navIcon tabIndex={0}>
+                                        <MaterialIcon hasRipple icon='menu' onClick={() => this.setState({open: true})}/>
+                                    </TopAppBarIcon>
+                                    <TopAppBarTitle>Football</TopAppBarTitle>
+                                </TopAppBarSection>
+                            </TopAppBarRow>
+                        </TopAppBar>
 
                         <TopAppBarFixedAdjust>
                             <main className="main-content" id="main-content">
@@ -74,38 +77,5 @@ class App extends React.Component {
         );
     }
 }
-
-// const App: React.FC = () => {
-//
-//     return (
-//         <div className="App">
-//
-//             <TopAppBar
-//                 title='Football'
-//                 navigationIcon={<MaterialIcon
-//                     icon='menu'
-//                     onClick={() => console.log('click')}
-//                 />}
-//             />
-//
-//             <Drawer></Drawer>
-//
-//             <header className="App-header">
-//                 <img src={logo} className="App-logo" alt="logo" />
-//                 <p>
-//                     Edit <code>src/App.tsx</code> and save to reload.
-//                 </p>
-//                 <a
-//                     className="App-link"
-//                     href="https://reactjs.org"
-//                     target="_blank"
-//                     rel="noopener noreferrer"
-//                 >
-//                     Learn React
-//                 </a>
-//             </header>
-//         </div>
-//     );
-// }
 
 export default App;
