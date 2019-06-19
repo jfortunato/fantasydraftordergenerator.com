@@ -4,17 +4,14 @@ import TopAppBar, {TopAppBarFixedAdjust, TopAppBarIcon, TopAppBarRow, TopAppBarS
 import MaterialIcon from '@material/react-material-icon';
 import Drawer, {DrawerAppContent, DrawerContent, DrawerHeader, DrawerTitle} from '@material/react-drawer';
 import List, {ListItem, ListItemGraphic, ListItemText} from '@material/react-list';
-import TextField, {HelperText, Input} from '@material/react-text-field';
-import {Headline5} from "@material/react-typography";
+import MainContent from "./MainContent";
 
 class App extends React.Component {
-    public state: any = {open: false, value: ''};
-    private handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => { this.setState({value: e.currentTarget.value}) }
+    public state: any = {open: false};
 
     render() {
         return (
             <div className="App">
-
                 <div className='drawer-container'>
                     <Drawer modal open={this.state.open} onClose={() => this.setState({open: false})}>
                         <DrawerHeader>
@@ -40,39 +37,18 @@ class App extends React.Component {
                                     <TopAppBarIcon navIcon tabIndex={0}>
                                         <MaterialIcon hasRipple icon='menu' onClick={() => this.setState({open: true})}/>
                                     </TopAppBarIcon>
-                                    <TopAppBarTitle>Football</TopAppBarTitle>
+                                    <TopAppBarTitle>Fantasy Draft Order Generator</TopAppBarTitle>
                                 </TopAppBarSection>
                             </TopAppBarRow>
                         </TopAppBar>
 
                         <TopAppBarFixedAdjust>
                             <main className="main-content" id="main-content">
-                                <Headline5>Fantasy Draft Order Generator</Headline5>
-
-                                <TextField
-                                    label='Name'
-                                    helperText={<HelperText>Help Me!</HelperText>}
-                                    onTrailingIconSelect={() => this.setState({value: ''})}
-                                    trailingIcon={<MaterialIcon role="button" icon="delete"/>}
-                                ><Input
-                                    value={this.state.value}
-                                    onChange={this.handleInputChange} />
-                                </TextField>
-
-                                <TextField
-                                    label='Name'
-                                    helperText={<HelperText>Help Me!</HelperText>}
-                                    onTrailingIconSelect={() => this.setState({value: ''})}
-                                    trailingIcon={<MaterialIcon role="button" icon="delete"/>}
-                                ><Input
-                                    value={this.state.value}
-                                    onChange={this.handleInputChange} />
-                                </TextField>
+                                <MainContent />
                             </main>
                         </TopAppBarFixedAdjust>
                     </DrawerAppContent>
                 </div>
-
             </div>
         );
     }

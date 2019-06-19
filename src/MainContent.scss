@@ -1,0 +1,20 @@
+@import '~@material/react-typography/index';
+@import '~@material/react-text-field/index';
+@import "~@material/list/mdc-list";
+@import "~@material/menu-surface/mdc-menu-surface";
+//@import "~@material/menu/mdc-menu";
+@import "~@material/menu/dist/mdc.menu.css";
+@import '~@material/react-select/index';
+
+.mdc-select {
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.mdc-select, .mdc-select__menu {
+  width: 100%;
+}
+
+.mdc-text-field {
+  display: block;
+}
