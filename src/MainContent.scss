@@ -18,3 +18,11 @@
 .mdc-text-field {
   display: block;
 }
+
+@media screen and (min-width: 400px) {
+  .team-text-field-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-column-gap: 10px;
+  }
+}
