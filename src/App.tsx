@@ -6,14 +6,18 @@ import Drawer, {DrawerAppContent, DrawerContent, DrawerHeader, DrawerTitle} from
 import List, {ListItem, ListItemGraphic, ListItemText} from '@material/react-list';
 import MainContent from "./MainContent";
 
-class App extends React.Component {
-    public state: any = {open: false};
+interface AppState {
+    drawerOpen: boolean;
+}
+
+class App extends React.Component<{}, AppState> {
+    public state: AppState = {drawerOpen: false};
 
     render() {
         return (
             <div className="App">
                 <div className='drawer-container'>
-                    <Drawer modal open={this.state.open} onClose={() => this.setState({open: false})}>
+                    <Drawer modal open={this.state.drawerOpen} onClose={() => this.setState({drawerOpen: false})}>
                         <DrawerHeader>
                             <DrawerTitle tag='h2'>
                                 Fantasy Football
@@ -35,7 +39,7 @@ class App extends React.Component {
                             <TopAppBarRow>
                                 <TopAppBarSection align='start'>
                                     <TopAppBarIcon navIcon tabIndex={0}>
-                                        <MaterialIcon hasRipple icon='menu' onClick={() => this.setState({open: true})}/>
+                                        <MaterialIcon hasRipple icon='menu' onClick={() => this.setState({drawerOpen: true})}/>
                                     </TopAppBarIcon>
                                     <TopAppBarTitle>Fantasy Draft Order Generator</TopAppBarTitle>
                                 </TopAppBarSection>

@@ -3,9 +3,16 @@ import React from "react";
 import Select, {Option} from '@material/react-select';
 import TeamTextField from './TeamTextField';
 
-class MainContent extends React.Component {
-    public state: any = {value: '10'};
-    private onEnhancedChange = (index: number, item: Element) => { this.setState({value: item.getAttribute('data-value')}) }
+interface MainContentState {
+    value: number;
+}
+
+class MainContent extends React.Component<{}, MainContentState> {
+    public state: MainContentState = {value: 10};
+
+    private onEnhancedChange = (index: number, item: Element) => {
+        this.setState({value: +(item.getAttribute('data-value') || 0)})
+    }
 
     render() {
         return (
@@ -14,7 +21,7 @@ class MainContent extends React.Component {
                     enhanced
                     // outlined
                     label='How Many Teams?'
-                    value={this.state.value}
+                    value={this.state.value.toString()}
                     onEnhancedChange={this.onEnhancedChange}
                 >
                     <Option value='6'>6 Teams</Option>
@@ -26,9 +33,9 @@ class MainContent extends React.Component {
 
 
                 <div className="team-text-field-list">
-                    {[...Array(+this.state.value)].map((n, index) =>
+                    {[...Array(this.state.value)].map((n, index) =>
                         <div className="team-text-field-container" key={index}>
-                            <TeamTextField />
+                            <TeamTextField defaultName={'Team ' + (index + 1)} />
                         </div>
                     )}
                 </div>
