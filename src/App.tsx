@@ -8,27 +8,49 @@ import MainContent from "./MainContent";
 
 interface AppState {
     drawerOpen: boolean;
+    permanentDrawer: boolean;
 }
 
 class App extends React.Component<{}, AppState> {
-    public state: AppState = {drawerOpen: false};
+    public state: AppState = {drawerOpen: false, permanentDrawer: false};
+
+    private updatePermanentDrawerStatus = () => {
+        this.setState({permanentDrawer: window.innerWidth >= 1000});
+    }
+
+    componentDidMount(): void {
+        this.updatePermanentDrawerStatus();
+        window.addEventListener('resize', this.updatePermanentDrawerStatus);
+    }
+
+    componentWillUnmount(): void {
+        window.removeEventListener('resize', this.updatePermanentDrawerStatus)
+    }
 
     render() {
         return (
             <div className="App">
                 <div className='drawer-container'>
-                    <Drawer modal open={this.state.drawerOpen} onClose={() => this.setState({drawerOpen: false})}>
+                    <Drawer modal={!this.state.permanentDrawer} open={this.state.drawerOpen} onClose={() => this.setState({drawerOpen: false})}>
                         <DrawerHeader>
                             <DrawerTitle tag='h2'>
-                                Fantasy Football
+                                Draft Type
                             </DrawerTitle>
                         </DrawerHeader>
 
                         <DrawerContent>
                             <List singleSelection selectedIndex={0}>
                                 <ListItem>
-                                    <ListItemGraphic graphic={<MaterialIcon icon='folder'/>} />
-                                    <ListItemText primaryText='Mail' />
+                                    <ListItemGraphic graphic={<MaterialIcon icon='casino'/>} />
+                                    <ListItemText primaryText='Simple Generator' />
+                                </ListItem>
+                                <ListItem>
+                                    <ListItemGraphic graphic={<MaterialIcon icon='today'/>} />
+                                    <ListItemText primaryText='Live Results' />
+                                </ListItem>
+                                <ListItem>
+                                    <ListItemGraphic graphic={<MaterialIcon icon='swap_vert'/>} />
+                                    <ListItemText primaryText='Weighted Lottery' />
                                 </ListItem>
                             </List>
                         </DrawerContent>
@@ -38,10 +60,12 @@ class App extends React.Component<{}, AppState> {
                         <TopAppBar>
                             <TopAppBarRow>
                                 <TopAppBarSection align='start'>
+                                    {!this.state.permanentDrawer &&
                                     <TopAppBarIcon navIcon tabIndex={0}>
                                         <MaterialIcon hasRipple icon='menu' onClick={() => this.setState({drawerOpen: true})}/>
                                     </TopAppBarIcon>
-                                    <TopAppBarTitle>Fantasy Draft Order Generator</TopAppBarTitle>
+                                    }
+                                    <TopAppBarTitle>Draft Order Maker</TopAppBarTitle>
                                 </TopAppBarSection>
                             </TopAppBarRow>
                         </TopAppBar>

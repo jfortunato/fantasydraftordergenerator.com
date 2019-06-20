@@ -1,6 +1,7 @@
 import './MainContent.scss';
 import React from "react";
 import Select, {Option} from '@material/react-select';
+import LeagueNameField from './LeagueNameField';
 import TeamTextField from './TeamTextField';
 
 interface MainContentState {
@@ -17,20 +18,23 @@ class MainContent extends React.Component<{}, MainContentState> {
     render() {
         return (
             <>
-                <Select
-                    enhanced
-                    // outlined
-                    label='How Many Teams?'
-                    value={this.state.value.toString()}
-                    onEnhancedChange={this.onEnhancedChange}
-                >
-                    <Option value='6'>6 Teams</Option>
-                    <Option value='10'>10 Teams</Option>
-                    <Option value='12'>12 Teams</Option>
-                    <Option value='16'>16 Teams</Option>
-                    <Option value='0'>Custom # Of Teams</Option>
-                </Select>
+                <div id="input-options">
+                    <LeagueNameField defaultName="League Name" />
 
+                    <Select
+                        enhanced
+                        // outlined
+                        label='How Many Teams?'
+                        value={this.state.value.toString()}
+                        onEnhancedChange={this.onEnhancedChange}
+                    >
+                        <Option value='6'>6 Teams</Option>
+                        <Option value='10'>10 Teams</Option>
+                        <Option value='12'>12 Teams</Option>
+                        <Option value='16'>16 Teams</Option>
+                        <Option value='0'>Custom # Of Teams</Option>
+                    </Select>
+                </div>
 
                 <div className="team-text-field-list">
                     {[...Array(this.state.value)].map((n, index) =>

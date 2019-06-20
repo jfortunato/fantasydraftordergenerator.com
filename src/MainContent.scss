@@ -6,17 +6,33 @@
 @import "~@material/menu/dist/mdc.menu.css";
 @import '~@material/react-select/index';
 
-.mdc-select {
-  margin-top: 20px;
+#main-content {
+  padding-top: 20px;
+}
+
+#input-options {
   margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  @media screen and (min-width: 640px) {
+    flex-direction: row;
+
+    .mdc-text-field, .mdc-select {
+      min-width: 300px;
+    }
+  }
+
+  .mdc-text-field {
+    margin-bottom: 15px;
+  }
 }
 
-.mdc-select, .mdc-select__menu {
-  width: 100%;
-}
-
-.mdc-text-field {
-  display: block;
+.team-text-field-list {
+  .mdc-text-field {
+    display: block;
+  }
 }
 
 @media screen and (min-width: 400px) {
