@@ -24,7 +24,7 @@ class App extends React.Component<{}, AppState> {
     }
 
     componentWillUnmount(): void {
-        window.removeEventListener('resize', this.updatePermanentDrawerStatus)
+        window.removeEventListener('resize', this.updatePermanentDrawerStatus);
     }
 
     render() {

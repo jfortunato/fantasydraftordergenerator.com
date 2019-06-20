@@ -1049,7 +1049,7 @@
   resolved "https://registry.yarnpkg.com/@material/dom/-/dom-0.41.0.tgz#6756865f97bad4c91ee75e69d769d7cdc25398ae"
   integrity sha512-wOJrMwjPddYXpQFZAIaCLWI3TO/6KU1lxESTBzunni8A4FHQVWhokml5Xt85GqZwmPFeIF2s+D0wfbWyrGBuKQ==
 
-"@material/dom@^1.1.0":
+"@material/dom@^1.0.0", "@material/dom@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@material/dom/-/dom-1.1.0.tgz#3bd3d1a3415b4181118fecb182d93beda56a6f8c"
   integrity sha512-+HWW38ZaM2UBPu4+7QCusLDSf4tFT31rsEXHkTkxYSg/QpDivfPx6YDz4OmYtafmhPR1d1YjqB3MYysUHdodyw==
@@ -1097,6 +1097,20 @@
     "@material/animation" "^1.0.0"
     "@material/feature-targeting" "^0.44.1"
     "@material/theme" "^1.1.0"
+
+"@material/fab@^1.1.0":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@material/fab/-/fab-1.1.1.tgz#1c8cb818b76ed30d6abb2f667c7df359300fec0d"
+  integrity sha512-6q9F61LIpakeHDninWI4VNLBQhvcyVcS5p1nrPdPDT60IW/lE5iQy7RKivaiMINVaQ0NZDzW1LjCgI5v063cLQ==
+  dependencies:
+    "@material/animation" "^1.0.0"
+    "@material/elevation" "^1.1.0"
+    "@material/feature-targeting" "^0.44.1"
+    "@material/ripple" "^1.1.0"
+    "@material/rtl" "^0.42.0"
+    "@material/shape" "^1.1.1"
+    "@material/theme" "^1.1.0"
+    "@material/typography" "^1.0.0"
 
 "@material/feature-targeting@^0.44.1":
   version "0.44.1"
@@ -1267,6 +1281,16 @@
     focus-trap "^3.0.0"
     react "^16.4.2"
 
+"@material/react-fab@^0.13.0":
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/@material/react-fab/-/react-fab-0.13.0.tgz#44c052f5e0261bcb31582a852d56420b3c34874e"
+  integrity sha512-TF9B6sesbejE8gLvZXkja4ABF9CHM+lDrsPU/am6ufGNtWyh52SAxiIWPoxs23SFAFUqLKYnXsZ7XpUMJR2ZlQ==
+  dependencies:
+    "@material/fab" "^1.1.0"
+    "@material/react-ripple" "^0.13.0"
+    classnames "^2.2.6"
+    react "^16.4.2"
+
 "@material/react-floating-label@^0.11.0":
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/@material/react-floating-label/-/react-floating-label-0.11.0.tgz#a1de21ea093726cdd77501bff7b8acf867324468"
@@ -1405,6 +1429,17 @@
     react "^16.4.2"
     utility-types "^3.2.1"
 
+"@material/react-ripple@^0.13.0":
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/@material/react-ripple/-/react-ripple-0.13.0.tgz#cfc90a2b92e06d809fe3d95cea8b450ff0a1828c"
+  integrity sha512-cmgZJ5L75msD/dZS6GY4yhC5PpnNsqp8Qq/3dLud8+cSBZKPmeBH4YHV8U660LpoxbCBdxi8HzM7CkslD1Acnw==
+  dependencies:
+    "@material/dom" "^1.0.0"
+    "@material/ripple" "^1.0.0"
+    classnames "^2.2.6"
+    react "^16.4.2"
+    utility-types "^3.2.1"
+
 "@material/react-ripple@^0.9.0":
   version "0.9.0"
   resolved "https://registry.yarnpkg.com/@material/react-ripple/-/react-ripple-0.9.0.tgz#06a30964f7568a5461f7706aee2049deb5a0989f"
@@ -1479,7 +1514,7 @@
     "@material/feature-targeting" "^0.44.1"
     "@material/theme" "^0.43.0"
 
-"@material/ripple@^1.1.0":
+"@material/ripple@^1.0.0", "@material/ripple@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@material/ripple/-/ripple-1.1.0.tgz#236016fb30c8366faf143297df2c38166d84ffbc"
   integrity sha512-mkfDBZAmxjpRG7V9TrfOmLxt1g/wvGHCXtYPgvH7W8ozjf53edqxLOFENEdvHbie27y9nyixzXn0gzU0HnxSeA==

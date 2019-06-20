@@ -5,9 +5,24 @@
 //@import "~@material/menu/mdc-menu";
 @import "~@material/menu/dist/mdc.menu.css";
 @import '~@material/react-select/index';
+//@import '~@material/react-fab/index';
+@import '~@material/react-fab/dist/fab.css';
 
 #main-content {
   padding-top: 20px;
+}
+
+.mdc-fab {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 1;
+
+  @media screen and (min-width: 1000px) {
+    position: relative;
+    bottom: initial;
+    right: initial;
+  }
 }
 
 #input-options {
