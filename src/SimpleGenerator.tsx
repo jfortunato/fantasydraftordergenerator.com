@@ -1,16 +1,19 @@
-import './MainContent.scss';
+import './SimpleGenerator.scss';
 import React from "react";
 import Select, {Option} from '@material/react-select';
 import LeagueNameField from './LeagueNameField';
 import TeamTextField from './TeamTextField';
 import {Fab} from "@material/react-fab";
+import {RouteComponentProps} from "react-router";
+
+interface MainContentProps extends RouteComponentProps{ }
 
 interface MainContentState {
     numberOfTeams: number;
     showButtonLabel: boolean;
 }
 
-class MainContent extends React.Component<{}, MainContentState> {
+class SimpleGenerator extends React.Component<MainContentProps, MainContentState> {
     public state: MainContentState = {numberOfTeams: 10, showButtonLabel: false};
 
     private onEnhancedChange = (index: number, item: Element) => {
@@ -18,8 +21,13 @@ class MainContent extends React.Component<{}, MainContentState> {
     }
 
     private updateShowButtonLabelStatus = () => {
-        this.setState({showButtonLabel: window.innerWidth >= 1200});
+        const width = window.innerWidth;
+        this.setState({showButtonLabel: (width >= 640 && width < 1000) || width >= 1200});
     }
+
+    private generateClicked = () => {
+        this.props.history.push('/simple-generator-results');
+    };
 
     componentDidMount(): void {
         this.updateShowButtonLabelStatus();
@@ -36,7 +44,7 @@ class MainContent extends React.Component<{}, MainContentState> {
                 <div id="input-options">
                     <LeagueNameField defaultName="League Name" />
 
-                    <Fab textLabel={this.state.showButtonLabel ? 'Generate' : ''} icon={<span className="material-icons">casino</span>}/>
+                    <Fab onClick={this.generateClicked} textLabel={this.state.showButtonLabel ? 'Generate' : ''} icon={<span className="material-icons">casino</span>}/>
 
                     <Select
                         enhanced
@@ -69,4 +77,4 @@ class MainContent extends React.Component<{}, MainContentState> {
     }
 }
 
-export default MainContent;
+export default SimpleGenerator;

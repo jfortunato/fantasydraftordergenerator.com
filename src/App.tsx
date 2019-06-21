@@ -1,22 +1,40 @@
 import React from 'react';
 import './App.scss';
-import TopAppBar, {TopAppBarFixedAdjust, TopAppBarIcon, TopAppBarRow, TopAppBarSection, TopAppBarTitle} from '@material/react-top-app-bar';
+import TopAppBar, {
+    TopAppBarFixedAdjust,
+    TopAppBarIcon,
+    TopAppBarRow,
+    TopAppBarSection,
+    TopAppBarTitle
+} from '@material/react-top-app-bar';
 import MaterialIcon from '@material/react-material-icon';
 import Drawer, {DrawerAppContent, DrawerContent, DrawerHeader, DrawerTitle} from '@material/react-drawer';
 import List, {ListItem, ListItemGraphic, ListItemText} from '@material/react-list';
-import MainContent from "./MainContent";
+import SimpleGenerator from "./SimpleGenerator";
+import SimpleGeneratorResults from "./SimpleGeneratorResults";
+import {Route, RouteComponentProps, withRouter} from "react-router-dom";
+
+interface AppProps extends RouteComponentProps { }
 
 interface AppState {
     drawerOpen: boolean;
     permanentDrawer: boolean;
 }
 
-class App extends React.Component<{}, AppState> {
+class App extends React.Component<AppProps, AppState> {
     public state: AppState = {drawerOpen: false, permanentDrawer: false};
 
     private updatePermanentDrawerStatus = () => {
         this.setState({permanentDrawer: window.innerWidth >= 1000});
     }
+
+    private listItemClicked = (selectedIndex: number) => {
+        if (selectedIndex === 0) {
+            this.props.history.push('/');
+        }
+
+        this.setState({drawerOpen: false});
+    };
 
     componentDidMount(): void {
         this.updatePermanentDrawerStatus();
@@ -39,7 +57,7 @@ class App extends React.Component<{}, AppState> {
                         </DrawerHeader>
 
                         <DrawerContent>
-                            <List singleSelection selectedIndex={0}>
+                            <List singleSelection selectedIndex={0} handleSelect={this.listItemClicked}>
                                 <ListItem>
                                     <ListItemGraphic graphic={<MaterialIcon icon='casino'/>} />
                                     <ListItemText primaryText='Simple Generator' />
@@ -72,7 +90,8 @@ class App extends React.Component<{}, AppState> {
 
                         <TopAppBarFixedAdjust>
                             <main className="main-content" id="main-content">
-                                <MainContent />
+                                <Route path="/" exact component={SimpleGenerator} />
+                                <Route path="/simple-generator-results" component={SimpleGeneratorResults} />
                             </main>
                         </TopAppBarFixedAdjust>
                     </DrawerAppContent>
@@ -82,4 +101,4 @@ class App extends React.Component<{}, AppState> {
     }
 }
 
-export default App;
+export default withRouter(App);
