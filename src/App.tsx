@@ -11,7 +11,6 @@ import MaterialIcon from '@material/react-material-icon';
 import Drawer, {DrawerAppContent, DrawerContent, DrawerHeader, DrawerTitle} from '@material/react-drawer';
 import List, {ListItem, ListItemGraphic, ListItemText} from '@material/react-list';
 import SimpleGenerator from "./SimpleGenerator";
-import SimpleGeneratorResults from "./SimpleGeneratorResults";
 import {Route, RouteComponentProps, withRouter} from "react-router-dom";
 
 interface AppProps extends RouteComponentProps { }
@@ -57,7 +56,7 @@ class App extends React.Component<AppProps, AppState> {
                         </DrawerHeader>
 
                         <DrawerContent>
-                            <List singleSelection selectedIndex={0} handleSelect={this.listItemClicked}>
+                            <List singleSelection selectedIndex={0} handleSelect={selectedIndex => this.listItemClicked(selectedIndex)}>
                                 <ListItem>
                                     <ListItemGraphic graphic={<MaterialIcon icon='casino'/>} />
                                     <ListItemText primaryText='Simple Generator' />
@@ -91,7 +90,7 @@ class App extends React.Component<AppProps, AppState> {
                         <TopAppBarFixedAdjust>
                             <main className="main-content" id="main-content">
                                 <Route path="/" exact component={SimpleGenerator} />
-                                <Route path="/simple-generator-results" component={SimpleGeneratorResults} />
+                                {/*<Route path="/simple-generator-results" component={SimpleGeneratorResults} />*/}
                             </main>
                         </TopAppBarFixedAdjust>
                     </DrawerAppContent>

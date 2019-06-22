@@ -1,9 +1,9 @@
 import React from "react";
 import TextField, {Input} from "@material/react-text-field";
 
-
 interface LeagueNameFieldProps {
-    defaultName: string;
+    leagueName: string;
+    onLeagueNameChange: Function;
 }
 
 interface LeagueNameFieldState {
@@ -11,17 +11,18 @@ interface LeagueNameFieldState {
 }
 
 class LeagueNameField extends React.Component<LeagueNameFieldProps, LeagueNameFieldState> {
-    public state: LeagueNameFieldState = {leagueName: this.props.defaultName};
-    private handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => { this.setState({leagueName: e.currentTarget.value}) }
+    private handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        this.props.onLeagueNameChange(e.currentTarget.value);
+    }
 
     render() {
         return (
             <TextField
                 // outlined
                 label="League Name"
-                onTrailingIconSelect={() => this.setState({leagueName: ''})}
+                onTrailingIconSelect={() => this.props.onLeagueNameChange('')}
             ><Input
-                value={this.state.leagueName}
+                value={this.props.leagueName}
                 onChange={this.handleInputChange} />
             </TextField>
         );
