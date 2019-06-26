@@ -1,10 +1,10 @@
-import './SimpleGenerator.scss';
 import React from "react";
 import Select, {Option} from '@material/react-select';
 import LeagueNameField from './LeagueNameField';
 import TeamTextField from './TeamTextField';
 import {Fab} from "@material/react-fab";
 import {RouteComponentProps} from "react-router";
+import './SimpleGenerator.scss';
 
 interface SimpleGeneratorProps extends RouteComponentProps {}
 
@@ -104,6 +104,7 @@ class SimpleGenerator extends React.Component<SimpleGeneratorProps, SimpleGenera
                             value={this.state.teamNames.length.toString()}
                             onEnhancedChange={this.onEnhancedChange}
                         >
+                            <Option value=''>Select Number Of Teams</Option>
                             <Option value='6'>6 Teams</Option>
                             <Option value='8'>8 Teams</Option>
                             <Option value='10'>10 Teams</Option>
@@ -112,7 +113,7 @@ class SimpleGenerator extends React.Component<SimpleGeneratorProps, SimpleGenera
                             <Option value='16'>16 Teams</Option>
                             <Option value='18'>18 Teams</Option>
                             <Option value='20'>20 Teams</Option>
-                            <Option value='0'>Custom # Of Teams</Option>
+                            {/*<Option value='0'>Custom # Of Teams</Option>*/}
                         </Select>
                     </div>
 

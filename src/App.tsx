@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.scss';
 import TopAppBar, {
     TopAppBarFixedAdjust,
     TopAppBarIcon,
@@ -9,9 +8,17 @@ import TopAppBar, {
 } from '@material/react-top-app-bar';
 import MaterialIcon from '@material/react-material-icon';
 import Drawer, {DrawerAppContent, DrawerContent, DrawerHeader, DrawerTitle} from '@material/react-drawer';
-import List, {ListItem, ListItemGraphic, ListItemText} from '@material/react-list';
-import SimpleGenerator from "./SimpleGenerator";
+import List, {
+    ListDivider,
+    ListGroup,
+    ListGroupSubheader,
+    ListItem,
+    ListItemGraphic,
+    ListItemText
+} from '@material/react-list';
 import {Route, RouteComponentProps, withRouter} from "react-router-dom";
+import './App.scss';
+import SimpleGenerator from "./SimpleGenerator";
 import SimpleGeneratorResults from './SimpleGeneratorResults';
 
 interface AppProps extends RouteComponentProps { }
@@ -90,20 +97,26 @@ class App extends React.Component<AppProps, AppState> {
                         </DrawerHeader>
 
                         <DrawerContent>
-                            <List singleSelection selectedIndex={0} handleSelect={selectedIndex => this.listItemClicked(selectedIndex)}>
-                                <ListItem>
-                                    <ListItemGraphic graphic={<MaterialIcon icon='casino'/>} />
-                                    <ListItemText primaryText='Simple Generator' />
-                                </ListItem>
-                                <ListItem>
-                                    <ListItemGraphic graphic={<MaterialIcon icon='today'/>} />
-                                    <ListItemText primaryText='Live Results' />
-                                </ListItem>
-                                <ListItem>
-                                    <ListItemGraphic graphic={<MaterialIcon icon='swap_vert'/>} />
-                                    <ListItemText primaryText='Weighted Lottery' />
-                                </ListItem>
-                            </List>
+                            <ListGroup>
+                                <List singleSelection selectedIndex={0} handleSelect={selectedIndex => this.listItemClicked(selectedIndex)}>
+                                    <ListItem>
+                                        <ListItemGraphic graphic={<MaterialIcon icon='casino'/>} />
+                                        <ListItemText primaryText='Simple Generator' />
+                                    </ListItem>
+                                </List>
+                                <ListDivider tag="div" />
+                                <ListGroupSubheader tag='h2'>Coming Soon</ListGroupSubheader>
+                                <List nonInteractive>
+                                    <ListItem>
+                                        <ListItemGraphic graphic={<MaterialIcon icon='today'/>} />
+                                        <ListItemText primaryText='Live Results' />
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemGraphic graphic={<MaterialIcon icon='swap_vert'/>} />
+                                        <ListItemText primaryText='Weighted Lottery' />
+                                    </ListItem>
+                                </List>
+                            </ListGroup>
                         </DrawerContent>
                     </Drawer>
 
