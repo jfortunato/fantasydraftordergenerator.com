@@ -5,22 +5,24 @@ import LeagueNameField from './LeagueNameField';
 import TeamTextField from './TeamTextField';
 import {Fab} from "@material/react-fab";
 import {RouteComponentProps} from "react-router";
-import SimpleGeneratorResults from "./SimpleGeneratorResults";
 
-interface MainContentProps extends RouteComponentProps{ }
+interface SimpleGeneratorProps extends RouteComponentProps {}
 
-interface MainContentState {
+interface SimpleGeneratorState {
     leagueName: string;
     teamNames: string[];
     showButtonLabel: boolean;
-    showResults: boolean;
 }
 
-class SimpleGenerator extends React.Component<MainContentProps, MainContentState> {
+class SimpleGenerator extends React.Component<SimpleGeneratorProps, SimpleGeneratorState> {
     private static DEFAULT_LEAGUE_NAME = 'League Name';
     private static DEFAULT_NUMBER_OF_TEAMS = 10;
+    public static STORAGE_KEYS = {
+        'LEAGUE_NAME': 'league-name',
+        'TEAM_NAMES': 'team-names',
+    };
 
-    public state: MainContentState = {leagueName: SimpleGenerator.DEFAULT_LEAGUE_NAME, teamNames: [], showButtonLabel: false, showResults: false};
+    public state: SimpleGeneratorState = {leagueName: SimpleGenerator.DEFAULT_LEAGUE_NAME, teamNames: [], showButtonLabel: false};
 
     private onEnhancedChange = (index: number, item: Element) => {
         const numberOfTeams = +(item.getAttribute('data-value') || 0);
@@ -34,8 +36,7 @@ class SimpleGenerator extends React.Component<MainContentProps, MainContentState
     }
 
     private generateClicked = () => {
-        // this.props.history.push('/simple-generator-results');
-        this.setState({showResults: true});
+        this.props.history.push('/simple-generator-results');
     };
 
     private updateTeamName = (index: number, newTeamName: string) => {
@@ -43,7 +44,7 @@ class SimpleGenerator extends React.Component<MainContentProps, MainContentState
 
         teamNames.splice(index, 1, newTeamName);
 
-        this.setState({teamNames});
+        this.saveTeamNames(teamNames);
     };
 
     private setupTeamNames(howMany: number): void {
@@ -56,7 +57,17 @@ class SimpleGenerator extends React.Component<MainContentProps, MainContentState
             teamNames.push(teamName);
         }
 
+        this.saveTeamNames(teamNames);
+    }
+
+    private saveLeagueName(leagueName: string): void {
+        this.setState({leagueName});
+        window.sessionStorage.setItem(SimpleGenerator.STORAGE_KEYS.LEAGUE_NAME, leagueName);
+    }
+
+    private saveTeamNames(teamNames: string[]): void {
         this.setState({teamNames});
+        window.sessionStorage.setItem(SimpleGenerator.STORAGE_KEYS.TEAM_NAMES, JSON.stringify(teamNames));
     }
 
     componentDidMount(): void {
@@ -72,10 +83,9 @@ class SimpleGenerator extends React.Component<MainContentProps, MainContentState
     render() {
         return (
             <>
-                { !this.state.showResults &&
                 <div id="simple-generator">
                     <div id="input-options">
-                        <LeagueNameField leagueName={this.state.leagueName} onLeagueNameChange={(newLeagueName: string) => this.setState({leagueName: newLeagueName})} />
+                        <LeagueNameField leagueName={this.state.leagueName} onLeagueNameChange={(newLeagueName: string) => this.saveLeagueName(newLeagueName)} />
 
                         <Fab onClick={this.generateClicked} textLabel={this.state.showButtonLabel ? 'Generate' : ''} icon={<span className="material-icons">casino</span>}/>
 
@@ -106,13 +116,6 @@ class SimpleGenerator extends React.Component<MainContentProps, MainContentState
                         )}
                     </div>
                 </div>
-                }
-
-                { this.state.showResults &&
-                <div id="simple-generator-results">
-                    <SimpleGeneratorResults leagueName={this.state.leagueName} teamNames={this.state.teamNames} onStartOver={() => this.setState({showResults: false})} />
-                </div>
-                }
             </>
         )
     }

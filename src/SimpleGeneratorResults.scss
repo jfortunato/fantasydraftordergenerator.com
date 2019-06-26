@@ -1,0 +1,10 @@
+.league-name {
+  text-align: center;
+}
+
+#results-table {
+  width: 100%;
+  thead tr, tr:nth-child(even) {
+    background-color: #fff;
+  }
+}

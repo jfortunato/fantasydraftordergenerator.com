@@ -12,32 +12,66 @@ import Drawer, {DrawerAppContent, DrawerContent, DrawerHeader, DrawerTitle} from
 import List, {ListItem, ListItemGraphic, ListItemText} from '@material/react-list';
 import SimpleGenerator from "./SimpleGenerator";
 import {Route, RouteComponentProps, withRouter} from "react-router-dom";
+import SimpleGeneratorResults from './SimpleGeneratorResults';
 
 interface AppProps extends RouteComponentProps { }
 
 interface AppState {
     drawerOpen: boolean;
     permanentDrawer: boolean;
+    topBarTitle: string;
 }
 
 class App extends React.Component<AppProps, AppState> {
-    public state: AppState = {drawerOpen: false, permanentDrawer: false};
+    private static DEFAULT_TITLE = 'Fantasy Draft Order Generator';
+    public state: AppState = {drawerOpen: false, permanentDrawer: false, topBarTitle: App.DEFAULT_TITLE};
 
     private updatePermanentDrawerStatus = () => {
         this.setState({permanentDrawer: window.innerWidth >= 1000});
     }
 
     private listItemClicked = (selectedIndex: number) => {
-        if (selectedIndex === 0) {
+        if (selectedIndex === 0 && this.props.location.pathname !== '/') {
             this.props.history.push('/');
         }
 
         this.setState({drawerOpen: false});
     };
 
+    private topBarIconClicked = () => {
+        if (this.isOnResultsPage()) {
+            return this.props.history.goBack();
+        }
+
+        this.setState({drawerOpen: true});
+    };
+
+    private isOnResultsPage(): boolean {
+        return this.props.location.pathname === '/simple-generator-results';
+    }
+
+    private updateTitle(): void {
+        const routeToTitle = [
+            { route: '/', title: App.DEFAULT_TITLE },
+            { route: '/simple-generator-results', title: 'Results' },
+        ];
+
+        const match = routeToTitle.find(r => r.route === this.props.location.pathname);
+
+        this.setState({topBarTitle: match ? match.title : App.DEFAULT_TITLE});
+    }
+
     componentDidMount(): void {
         this.updatePermanentDrawerStatus();
+        this.updateTitle();
         window.addEventListener('resize', this.updatePermanentDrawerStatus);
+    }
+
+    componentDidUpdate(prevProps: Readonly<AppProps>): void {
+        // update the top app bar title when route changed
+        if (this.props.location !== prevProps.location) {
+            this.updateTitle();
+        }
     }
 
     componentWillUnmount(): void {
@@ -77,12 +111,12 @@ class App extends React.Component<AppProps, AppState> {
                         <TopAppBar>
                             <TopAppBarRow>
                                 <TopAppBarSection align='start'>
-                                    {!this.state.permanentDrawer &&
+                                    {(!this.state.permanentDrawer || this.isOnResultsPage()) &&
                                     <TopAppBarIcon navIcon tabIndex={0}>
-                                        <MaterialIcon hasRipple icon='menu' onClick={() => this.setState({drawerOpen: true})}/>
+                                        <MaterialIcon hasRipple icon={this.isOnResultsPage() ? 'arrow_back' : 'menu'} onClick={this.topBarIconClicked}/>
                                     </TopAppBarIcon>
                                     }
-                                    <TopAppBarTitle>Draft Order Maker</TopAppBarTitle>
+                                    <TopAppBarTitle>{this.state.topBarTitle}</TopAppBarTitle>
                                 </TopAppBarSection>
                             </TopAppBarRow>
                         </TopAppBar>
@@ -90,7 +124,7 @@ class App extends React.Component<AppProps, AppState> {
                         <TopAppBarFixedAdjust>
                             <main className="main-content" id="main-content">
                                 <Route path="/" exact component={SimpleGenerator} />
-                                {/*<Route path="/simple-generator-results" component={SimpleGeneratorResults} />*/}
+                                <Route path="/simple-generator-results" component={SimpleGeneratorResults} />
                             </main>
                         </TopAppBarFixedAdjust>
                     </DrawerAppContent>
