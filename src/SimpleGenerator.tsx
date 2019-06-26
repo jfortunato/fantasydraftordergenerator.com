@@ -22,7 +22,15 @@ class SimpleGenerator extends React.Component<SimpleGeneratorProps, SimpleGenera
         'TEAM_NAMES': 'team-names',
     };
 
-    public state: SimpleGeneratorState = {leagueName: SimpleGenerator.DEFAULT_LEAGUE_NAME, teamNames: [], showButtonLabel: false};
+    constructor(props: SimpleGeneratorProps) {
+        super(props);
+
+        this.state = {
+            leagueName: sessionStorage.getItem(SimpleGenerator.STORAGE_KEYS.LEAGUE_NAME) || SimpleGenerator.DEFAULT_LEAGUE_NAME,
+            teamNames: JSON.parse(sessionStorage.getItem(SimpleGenerator.STORAGE_KEYS.TEAM_NAMES) || '[]'),
+            showButtonLabel: false,
+        };
+    }
 
     private onEnhancedChange = (index: number, item: Element) => {
         const numberOfTeams = +(item.getAttribute('data-value') || 0);

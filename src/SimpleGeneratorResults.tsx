@@ -12,7 +12,18 @@ interface SimpleGeneratorResultsState {
 }
 
 class SimpleGeneratorResults extends React.Component<SimpleGeneratorResultsProps, SimpleGeneratorResultsState> {
-    public state: SimpleGeneratorResultsState = {leagueName: '', results: []};
+    constructor(props: SimpleGeneratorResultsProps) {
+        super(props);
+
+        const leagueName = sessionStorage.getItem(SimpleGenerator.STORAGE_KEYS.LEAGUE_NAME) || '';
+        const results = this.generateResults(JSON.parse(sessionStorage.getItem(SimpleGenerator.STORAGE_KEYS.TEAM_NAMES) || '[]'));
+
+        if (results.length === 0) {
+            props.history.push('/');
+        }
+
+        this.state = { leagueName, results };
+    }
 
     /**
      * Fisher-Yates (aka Knuth) shuffle
@@ -36,17 +47,6 @@ class SimpleGeneratorResults extends React.Component<SimpleGeneratorResultsProps
         }
 
         return array.map((teamName, index) => ({ pickNumber: index + 1, teamName: teamName })).reverse();
-    }
-
-    componentDidMount(): void {
-        const leagueName = window.sessionStorage.getItem(SimpleGenerator.STORAGE_KEYS.LEAGUE_NAME) || '';
-        const teamNames = window.sessionStorage.getItem(SimpleGenerator.STORAGE_KEYS.TEAM_NAMES);
-
-        if (teamNames === null) {
-            return this.props.history.push('/');
-        }
-
-        this.setState({leagueName: leagueName, results: this.generateResults(JSON.parse(teamNames))});
     }
 
     render() {
