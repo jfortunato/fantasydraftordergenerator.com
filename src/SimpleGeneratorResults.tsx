@@ -3,6 +3,7 @@ import React from "react";
 import {Body1, Headline4, Headline5} from "@material/react-typography";
 import {RouteComponentProps} from "react-router";
 import SimpleGenerator from "./SimpleGenerator";
+import LinearProgress from "@material/react-linear-progress";
 
 interface SimpleGeneratorResultsProps extends RouteComponentProps {}
 
@@ -16,13 +17,30 @@ class SimpleGeneratorResults extends React.Component<SimpleGeneratorResultsProps
         super(props);
 
         const leagueName = sessionStorage.getItem(SimpleGenerator.STORAGE_KEYS.LEAGUE_NAME) || '';
-        const results = this.generateResults(JSON.parse(sessionStorage.getItem(SimpleGenerator.STORAGE_KEYS.TEAM_NAMES) || '[]'));
 
-        if (results.length === 0) {
+        if (this.getTeamNames().length === 0) {
             props.history.push('/');
         }
 
-        this.state = { leagueName, results };
+        this.state = { leagueName, results: [] };
+    }
+
+    componentDidMount(): void {
+        this.generateDelayedResults().then(results => this.setState({results: results}));
+    }
+
+    private getTeamNames(): string[] {
+        return JSON.parse(sessionStorage.getItem(SimpleGenerator.STORAGE_KEYS.TEAM_NAMES) || '[]');
+    }
+
+    /*
+     * Introduce an artificial delay to improve the perception that cpu-intensive
+     * randomization is being performed.
+     */
+    private generateDelayedResults(): Promise<OrderResult[]> {
+        return new Promise<OrderResult[]>(resolve => {
+            setTimeout(() => resolve(this.generateResults(this.getTeamNames())), 1000);
+        });
     }
 
     /**
@@ -50,6 +68,15 @@ class SimpleGeneratorResults extends React.Component<SimpleGeneratorResultsProps
     }
 
     render() {
+        if (this.state.results.length === 0) {
+            return (
+                <>
+                    <Headline4 className="generating-results">Generating Results...</Headline4>
+                    <LinearProgress indeterminate={true} />
+                </>
+            );
+        }
+
         return (
             <div>
                 <Headline4 className="league-name">{ this.state.leagueName }</Headline4>
