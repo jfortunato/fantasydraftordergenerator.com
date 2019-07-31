@@ -83,7 +83,6 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     private routeChanged(newRoute: string): void {
-        console.log(newRoute);
         if (window.gtag) {
             window.gtag('config', 'UA-22673798-9', {'page_path': newRoute});
         }
