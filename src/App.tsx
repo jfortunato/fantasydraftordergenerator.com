@@ -29,9 +29,16 @@ interface AppState {
     topBarTitle: string;
 }
 
+declare global {
+    interface Window {
+        gtag?: any;
+    }
+}
+
 class App extends React.Component<AppProps, AppState> {
     private static DEFAULT_TITLE = 'Fantasy Draft Order Generator';
     public state: AppState = {drawerOpen: false, permanentDrawer: false, topBarTitle: App.DEFAULT_TITLE};
+    private unlistenRouteChange?: any;
 
     private updatePermanentDrawerStatus = () => {
         this.setState({permanentDrawer: window.innerWidth >= 1000});
@@ -68,7 +75,22 @@ class App extends React.Component<AppProps, AppState> {
         this.setState({topBarTitle: match ? match.title : App.DEFAULT_TITLE});
     }
 
+    private setupRouteChangeListener(): void {
+        this.routeChanged(this.props.history.location.pathname);
+        this.unlistenRouteChange = this.props.history.listen((location, action) => {
+            this.routeChanged(location.pathname);
+        });
+    }
+
+    private routeChanged(newRoute: string): void {
+        console.log(newRoute);
+        if (window.gtag) {
+            window.gtag('config', 'UA-22673798-9', {'page_path': newRoute});
+        }
+    }
+
     componentDidMount(): void {
+        this.setupRouteChangeListener();
         this.updatePermanentDrawerStatus();
         this.updateTitle();
         window.addEventListener('resize', this.updatePermanentDrawerStatus);
@@ -82,6 +104,7 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     componentWillUnmount(): void {
+        if (this.unlistenRouteChange) this.unlistenRouteChange.unlisten()
         window.removeEventListener('resize', this.updatePermanentDrawerStatus);
     }
 
