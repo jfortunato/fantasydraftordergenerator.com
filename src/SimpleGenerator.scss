@@ -1,5 +1,38 @@
 #main-content {
   padding-top: 20px;
+  box-sizing: border-box;
+  height: calc(100vh - var(--top-app-bar-height));
+}
+
+#simple-generator {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+@media screen and (min-width: 1000px) {
+  #simple-generator { flex-direction: column-reverse; }
+  .importers { flex: 1; }
+}
+
+.importers {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 20px;
+}
+
+.importers__item {
+  text-align: center;
+}
+
+.importers__item-image {
+  width: 50px;
+}
+
+.importers__item-button {
+  display: block;
+  margin-top: 10px;
 }
 
 .mdc-fab {

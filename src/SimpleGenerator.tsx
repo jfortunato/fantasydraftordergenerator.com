@@ -3,8 +3,10 @@ import Select, {Option} from '@material/react-select';
 import LeagueNameField from './LeagueNameField';
 import TeamTextField from './TeamTextField';
 import {Fab} from "@material/react-fab";
+import Button from "@material/react-button";
 import {RouteComponentProps} from "react-router";
 import './SimpleGenerator.scss';
+import espnLogo from './importers/espn/espn-fantasy-football.png';
 
 interface SimpleGeneratorProps extends RouteComponentProps {}
 
@@ -80,7 +82,8 @@ class SimpleGenerator extends React.Component<SimpleGeneratorProps, SimpleGenera
 
     componentDidMount(): void {
         this.updateShowButtonLabelStatus();
-        this.setupTeamNames(SimpleGenerator.DEFAULT_NUMBER_OF_TEAMS);
+        const totalTeams = this.state.teamNames.length === 0 ? SimpleGenerator.DEFAULT_NUMBER_OF_TEAMS : this.state.teamNames.length;
+        this.setupTeamNames(totalTeams);
         window.addEventListener('resize', this.updateShowButtonLabelStatus);
     }
 
@@ -92,38 +95,50 @@ class SimpleGenerator extends React.Component<SimpleGeneratorProps, SimpleGenera
         return (
             <>
                 <div id="simple-generator">
-                    <div id="input-options">
-                        <LeagueNameField leagueName={this.state.leagueName} onLeagueNameChange={(newLeagueName: string) => this.saveLeagueName(newLeagueName)} />
-
-                        <Fab onClick={this.generateClicked} textLabel={this.state.showButtonLabel ? 'Generate' : ''} icon={<span className="material-icons">casino</span>}/>
-
-                        <Select
-                            enhanced
-                            // outlined
-                            label='How Many Teams?'
-                            value={this.state.teamNames.length.toString()}
-                            onEnhancedChange={this.onEnhancedChange}
-                        >
-                            <Option value=''>Select Number Of Teams</Option>
-                            <Option value='6'>6 Teams</Option>
-                            <Option value='8'>8 Teams</Option>
-                            <Option value='10'>10 Teams</Option>
-                            <Option value='12'>12 Teams</Option>
-                            <Option value='14'>14 Teams</Option>
-                            <Option value='16'>16 Teams</Option>
-                            <Option value='18'>18 Teams</Option>
-                            <Option value='20'>20 Teams</Option>
-                            {/*<Option value='0'>Custom # Of Teams</Option>*/}
-                        </Select>
+                    <div className="importers">
+                        <div className="importers__item">
+                            <img src={espnLogo} alt="" className="importers__item-image" />
+                            <Button outlined onClick={() => this.props.history.push('/espn-importer')} className="importers__item-button">Import From ESPN</Button>
+                        </div>
                     </div>
 
-                    <div className="team-text-field-list">
-                        {this.state.teamNames.map((teamName, index) =>
-                            <div className="team-text-field-container" key={index}>
-                                <TeamTextField teamName={teamName} onTeamNameChange={(newTeamName: string) => this.updateTeamName(index, newTeamName)} />
-                            </div>
-                        )}
+                    <div className="generator">
+                        <div id="input-options">
+                            <LeagueNameField leagueName={this.state.leagueName} onLeagueNameChange={(newLeagueName: string) => this.saveLeagueName(newLeagueName)} />
+
+                            <Fab onClick={this.generateClicked} textLabel={this.state.showButtonLabel ? 'Generate' : ''} icon={<span className="material-icons">casino</span>}/>
+
+                            <Select
+                                enhanced
+                                // outlined
+                                label='How Many Teams?'
+                                value={this.state.teamNames.length.toString()}
+                                onEnhancedChange={this.onEnhancedChange}
+                            >
+                                <Option value=''>Select Number Of Teams</Option>
+                                <Option value='6'>6 Teams</Option>
+                                <Option value='8'>8 Teams</Option>
+                                <Option value='10'>10 Teams</Option>
+                                <Option value='12'>12 Teams</Option>
+                                <Option value='14'>14 Teams</Option>
+                                <Option value='16'>16 Teams</Option>
+                                <Option value='18'>18 Teams</Option>
+                                <Option value='20'>20 Teams</Option>
+                                {/*<Option value='0'>Custom # Of Teams</Option>*/}
+                            </Select>
+                        </div>
+
+                        <div className="team-text-field-list">
+                            {this.state.teamNames.map((teamName, index) =>
+                                <div className="team-text-field-container" key={index}>
+                                    <TeamTextField teamName={teamName} onTeamNameChange={(newTeamName: string) => this.updateTeamName(index, newTeamName)} />
+                                </div>
+                            )}
+                        </div>
+
                     </div>
+
+
                 </div>
             </>
         )

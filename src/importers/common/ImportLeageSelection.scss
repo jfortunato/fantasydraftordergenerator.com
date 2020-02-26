@@ -1,0 +1,57 @@
+.import-league-selection__options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.import-league-selection__option {
+  background: #fff;
+  flex-grow: 1;
+  margin-top: 15px;
+  margin-right: 15px;
+  text-align: left;
+  box-shadow: 0 0 7px -5px #000;
+}
+
+@media screen and (min-width: 1000px) {
+  .import-league-selection__option { flex-grow: initial; }
+}
+
+.import-league-selection__option-content {
+  display: flex;
+  padding: 15px;
+}
+
+.import-league-selection__option-actions {
+  text-align: center;
+  padding: 10px;
+  background: #f7f7f7;
+  border-top: 1px solid #ddd;
+}
+
+.import-league-selection__option-team-logo {
+  width: 100px;
+  margin-right: 10px;
+}
+
+.import-league-selection__option-league-name {
+  margin: 0;
+  padding-top: 8px;
+}
+
+.import-league-selection__option-team-name {
+  margin: 0;
+}
+
+.import-league-selection__option-number-teams {
+  margin: 0;
+  color: #666666;
+}
+
+.import-league-selection__option-actions {
+  clear: both;
+}
+
+.import-league-selection__recheck-button {
+  margin-top: 100px;
+}

@@ -20,6 +20,7 @@ import {Route, RouteComponentProps, withRouter} from "react-router-dom";
 import './App.scss';
 import SimpleGenerator from "./SimpleGenerator";
 import SimpleGeneratorResults from './SimpleGeneratorResults';
+import EspnImporter from "./importers/espn/EspnImporter";
 
 interface AppProps extends RouteComponentProps { }
 
@@ -160,6 +161,7 @@ class App extends React.Component<AppProps, AppState> {
                             <main className="main-content" id="main-content">
                                 <Route path="/" exact component={SimpleGenerator} />
                                 <Route path="/simple-generator-results" component={SimpleGeneratorResults} />
+                                <Route path="/espn-importer" component={EspnImporter} />
                             </main>
                         </TopAppBarFixedAdjust>
                     </DrawerAppContent>
