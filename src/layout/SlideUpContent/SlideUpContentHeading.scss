@@ -1,6 +1,6 @@
 .slide-up-content__heading {
   background-color: var(--mdc-theme-primary);
-  height: 340px;
+  height: var(--slide-up-content-header-height);
   width: 100%;
   padding-top: 60px;
   //padding-left: var(--main-content-side-padding);

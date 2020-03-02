@@ -17,9 +17,9 @@ class SlideUpContentHeading extends React.Component<SlideUpContentHeadingProps, 
     public state: SlideUpContentHeadingState = { opacity: 0, isFullyHidden: false };
 
     private updateOpacity = () => {
-        const max = 396;
+        const height = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--slide-up-content-header-height'));
 
-        let opacity = window.scrollY / max;
+        let opacity = window.scrollY / height;
 
         if (opacity >= 1) {
             opacity = 1;

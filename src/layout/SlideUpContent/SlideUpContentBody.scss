@@ -1,7 +1,8 @@
 .slide-up-content__body {
+  background-color: #eee;
   min-height: 100vh;
   padding-left: var(--main-content-side-padding);
   padding-right: var(--main-content-side-padding);
   position: relative;
-  top: 340px;
+  top: var(--slide-up-content-header-height);
 }
