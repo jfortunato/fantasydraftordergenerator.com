@@ -7,3 +7,9 @@
   margin-left: calc(var(--main-content-side-padding) * -1);
   margin-right: calc(var(--main-content-side-padding) * -1);
 }
+
+@media screen and (min-width: 1000px) {
+  :root {
+    --slide-up-content-header-height: 200px;
+  }
+}

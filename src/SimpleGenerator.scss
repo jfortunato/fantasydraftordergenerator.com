@@ -9,6 +9,8 @@
   margin-right: calc(var(--main-content-side-padding) * -1);
   padding-left: var(--main-content-side-padding);
   padding-right: var(--main-content-side-padding);
+  display: flex;
+  flex-direction: column;
 }
 
 
@@ -38,6 +40,23 @@
 }
 .slide-up-content__heading--fully-hidden + .slide-up-content__body .simple-generator__generator {
   margin-top: 240px;
+}
+@media screen and (min-width: 1000px) {
+  .simple-generator__app-content {
+    padding-top: 30px;
+    flex-direction: column-reverse;
+  }
+  .simple-generator__importers {
+    box-shadow: none;
+    background-color: transparent;
+  }
+  .slide-up-content__heading--fully-hidden + .slide-up-content__body .simple-generator__importers {
+    position: initial;
+    width: initial;
+  }
+  .slide-up-content__heading--fully-hidden + .slide-up-content__body .simple-generator__generator {
+    margin-top: 0;
+  }
 }
 
 

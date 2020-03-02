@@ -58,6 +58,7 @@ class SlideUpContentHeading extends React.Component<SlideUpContentHeadingProps, 
                 <MaterialIcon hasRipple icon='menu' onClick={this.menuClicked} className="slide-up-content__heading-menu-toggle" />
                 <img src={logo} alt="" className="slide-up-content__heading-logo" />
                 <Headline5 tag="h1" className="slide-up-content__heading-tagline">{this.props.children}</Headline5>
+                <div className="slide-up-content__heading-advertising"></div>
                 <div className="slide-up-content__heading-overlay" style={overlayStyles}></div>
             </div>
         );

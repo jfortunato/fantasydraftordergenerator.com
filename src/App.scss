@@ -52,9 +52,8 @@ body {
   }
 
   .slide-up-content {
-    .slide-up-content__heading,
-    .slide-up-content__heading--fully-hidden + .slide-up-content__body .simple-generator__importers {
-      width: calc(100% - 256px);
+    .slide-up-content__heading {
+      width: calc(100% - var(--drawer-width) - calc(var(--main-content-side-padding) * 2));
     }
 
     .slide-up-content__heading-menu-toggle {
