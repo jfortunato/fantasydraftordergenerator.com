@@ -1,0 +1,5 @@
+.slide-up-content {
+  margin-top: calc(var(--main-content-vertical-padding) * -1);
+  margin-left: calc(var(--main-content-side-padding) * -1);
+  margin-right: calc(var(--main-content-side-padding) * -1);
+}

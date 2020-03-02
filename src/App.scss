@@ -6,6 +6,9 @@ $mdc-theme-background: #fff;
   --mdc-theme-primary: #487eb0;
   --mdc-theme-secondary: #018786;
   --top-app-bar-height: 64px;
+  --main-content-vertical-padding: 20px;
+  --main-content-side-padding: 15px;
+  --drawer-width: 256px;
 }
 
 @import '~@material/react-top-app-bar/index.scss';
@@ -30,17 +33,37 @@ body {
 }
 
 #main-content {
-  padding: 20px 15px 15px 15px;
+  padding: var(--main-content-vertical-padding) var(--main-content-side-padding);
 }
 
 .drawer-container {
-  display: flex;
-  flex-direction: row;
+  //display: flex;
+  //flex-direction: row;
   height: 100vh;
-  overflow: hidden;
+  //overflow: hidden;
+}
+
+@media screen and (min-width: 1000px) {
+  .mdc-drawer {
+    position: fixed;
+  }
+  .drawer-app-content {
+    margin-left: var(--drawer-width)
+  }
+
+  .slide-up-content {
+    .slide-up-content__heading,
+    .slide-up-content__heading--fully-hidden + .slide-up-content__body .simple-generator__importers {
+      width: calc(100% - 256px);
+    }
+
+    .slide-up-content__heading-menu-toggle {
+      display: none;
+    }
+  }
 }
 
 .drawer-app-content {
-  flex: auto;
-  overflow: auto;
+  //flex: auto;
+  //overflow: auto;
 }

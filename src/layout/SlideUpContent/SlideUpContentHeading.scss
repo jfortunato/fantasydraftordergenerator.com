@@ -1,0 +1,35 @@
+.slide-up-content__heading {
+  background-color: var(--mdc-theme-primary);
+  height: 340px;
+  width: 100%;
+  padding-top: 60px;
+  //padding-left: var(--main-content-side-padding);
+  //padding-right: var(--main-content-side-padding);
+  text-align: center;
+  position: fixed;
+  box-shadow: 0 -5px 5px -5px #000 inset;
+}
+.slide-up-content__heading-menu-toggle {
+  position: absolute;
+  top: 20px;
+  left: 15px;
+  color: #fff;
+}
+.slide-up-content__heading-logo {
+  width: 150px;
+  height: 150px;
+}
+.slide-up-content__heading-tagline {
+  color: #fff;
+  font-weight: 300;
+}
+.slide-up-content__heading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #000;
+  display: none;
+  opacity: 0;
+}

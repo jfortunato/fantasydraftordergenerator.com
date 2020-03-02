@@ -28,6 +28,7 @@ interface AppState {
     drawerOpen: boolean;
     permanentDrawer: boolean;
     topBarTitle: string;
+    usesTopBar: boolean;
 }
 
 declare global {
@@ -37,8 +38,8 @@ declare global {
 }
 
 class App extends React.Component<AppProps, AppState> {
-    private static DEFAULT_TITLE = 'Fantasy Draft Order Generator';
-    public state: AppState = {drawerOpen: false, permanentDrawer: false, topBarTitle: App.DEFAULT_TITLE};
+    private static DEFAULT_TITLE = '';
+    public state: AppState = {drawerOpen: false, permanentDrawer: false, topBarTitle: App.DEFAULT_TITLE, usesTopBar: false };
     private unlistenRouteChange?: any;
 
     private updatePermanentDrawerStatus = () => {
@@ -67,13 +68,14 @@ class App extends React.Component<AppProps, AppState> {
 
     private updateTitle(): void {
         const routeToTitle = [
-            { route: '/', title: App.DEFAULT_TITLE },
-            { route: '/simple-generator-results', title: 'Results' },
+            { route: '/', title: App.DEFAULT_TITLE, usesTopBar: false },
+            { route: '/simple-generator-results', title: 'Results', usesTopBar: true },
+            { route: '/espn-importer', title: 'Import From ESPN', usesTopBar: true },
         ];
 
-        const match = routeToTitle.find(r => r.route === this.props.location.pathname);
+        const match = routeToTitle.find(r => r.route === this.props.location.pathname) || routeToTitle[0];
 
-        this.setState({topBarTitle: match ? match.title : App.DEFAULT_TITLE});
+        this.setState({topBarTitle: match.title, usesTopBar: match.usesTopBar});
     }
 
     private setupRouteChangeListener(): void {
@@ -94,6 +96,7 @@ class App extends React.Component<AppProps, AppState> {
         this.updatePermanentDrawerStatus();
         this.updateTitle();
         window.addEventListener('resize', this.updatePermanentDrawerStatus);
+        window.addEventListener('toggle-menu-clicked', this.topBarIconClicked);
     }
 
     componentDidUpdate(prevProps: Readonly<AppProps>): void {
@@ -106,6 +109,7 @@ class App extends React.Component<AppProps, AppState> {
     componentWillUnmount(): void {
         if (this.unlistenRouteChange) this.unlistenRouteChange.unlisten()
         window.removeEventListener('resize', this.updatePermanentDrawerStatus);
+        window.removeEventListener('toggle-menu-clicked', this.topBarIconClicked);
     }
 
     render() {
@@ -144,29 +148,48 @@ class App extends React.Component<AppProps, AppState> {
                     </Drawer>
 
                     <DrawerAppContent className='drawer-app-content'>
-                        <TopAppBar>
-                            <TopAppBarRow>
-                                <TopAppBarSection align='start'>
-                                    {(!this.state.permanentDrawer || this.isOnResultsPage()) &&
-                                    <TopAppBarIcon navIcon tabIndex={0}>
-                                        <MaterialIcon hasRipple icon={this.isOnResultsPage() ? 'arrow_back' : 'menu'} onClick={this.topBarIconClicked}/>
-                                    </TopAppBarIcon>
-                                    }
-                                    <TopAppBarTitle>{this.state.topBarTitle}</TopAppBarTitle>
-                                </TopAppBarSection>
-                            </TopAppBarRow>
-                        </TopAppBar>
+                        {this.state.usesTopBar &&
+                        <>
+                            <TopAppBar fixed>
+                                <TopAppBarRow>
+                                    <TopAppBarSection align='start'>
+                                        {(!this.state.permanentDrawer || this.isOnResultsPage()) &&
+                                        <TopAppBarIcon navIcon tabIndex={0}>
+                                            <MaterialIcon hasRipple
+                                                          icon={this.isOnResultsPage() ? 'arrow_back' : 'menu'}
+                                                          onClick={this.topBarIconClicked}/>
+                                        </TopAppBarIcon>
+                                        }
+                                        <TopAppBarTitle>{this.state.topBarTitle}</TopAppBarTitle>
+                                    </TopAppBarSection>
+                                </TopAppBarRow>
+                            </TopAppBar>
 
-                        <TopAppBarFixedAdjust>
-                            <main className="main-content" id="main-content">
-                                <Route path="/" exact component={SimpleGenerator} />
-                                <Route path="/simple-generator-results" component={SimpleGeneratorResults} />
-                                <Route path="/espn-importer" component={EspnImporter} />
-                            </main>
-                        </TopAppBarFixedAdjust>
+                            <TopAppBarFixedAdjust>
+                                <MainContent/>
+                            </TopAppBarFixedAdjust>
+                        </>
+                        }
+
+                        {!this.state.usesTopBar &&
+                        <MainContent/>
+                        }
+
                     </DrawerAppContent>
                 </div>
             </div>
+        );
+    }
+}
+
+class MainContent extends React.Component<any, any>{
+    render() {
+        return (
+            <main className="main-content" id="main-content">
+                <Route path="/" exact component={SimpleGenerator} />
+                <Route path="/simple-generator-results" component={SimpleGeneratorResults} />
+                <Route path="/espn-importer" component={EspnImporter} />
+            </main>
         );
     }
 }

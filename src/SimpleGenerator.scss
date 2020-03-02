@@ -1,41 +1,52 @@
-#main-content {
-  padding-top: 20px;
-  box-sizing: border-box;
-  height: calc(100vh - var(--top-app-bar-height));
+.simple-generator {
 }
 
-#simple-generator {
+
+
+.simple-generator__app-content {
+  background-color: #eee;
+  margin-left: calc(var(--main-content-side-padding) * -1);
+  margin-right: calc(var(--main-content-side-padding) * -1);
+  padding-left: var(--main-content-side-padding);
+  padding-right: var(--main-content-side-padding);
+}
+
+
+
+.simple-generator__importers {
+  margin: 0 calc(var(--main-content-side-padding) * -1);
+  background: #f7f7f7;
+  box-shadow: 0 0 8px -4px #000 inset;
   display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-@media screen and (min-width: 1000px) {
-  #simple-generator { flex-direction: column-reverse; }
-  .importers { flex: 1; }
-}
-
-.importers {
-  display: flex;
-  align-items: flex-end;
   justify-content: center;
-  padding-bottom: 20px;
+  padding: 30px 0;
 }
-
-.importers__item {
-  text-align: center;
+.simple-generator__importers-item {
+  margin: 20px 10px;
 }
-
-.importers__item-image {
-  width: 50px;
-}
-
-.importers__item-button {
+.simple-generator__importers-item-image {
+  width: 75px;
   display: block;
-  margin-top: 10px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+.slide-up-content__heading--fully-hidden + .slide-up-content__body .simple-generator__importers {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 4;
+}
+.slide-up-content__heading--fully-hidden + .slide-up-content__body .simple-generator__generator {
+  margin-top: 240px;
 }
 
-.mdc-fab {
+
+
+.simple-generator__generator {
+  margin: 20px 0;
+  padding-bottom: 60px;
+}
+.simple-generator__generator-execute-button {
   position: fixed;
   bottom: 1.5rem;
   left: 50%;
@@ -49,8 +60,7 @@
     transform: none;
   }
 }
-
-#input-options {
+.simple-generator__generator-inputs {
   margin-bottom: 40px;
   display: flex;
   flex-direction: column;
@@ -68,17 +78,25 @@
     margin-bottom: 15px;
   }
 }
+.simple-generator__generator-input-league-name,
+.simple-generator__generator-input-number-teams {
+  .mdc-text-field, .mdc-select { display: block; }
 
-.team-text-field-list {
-  .mdc-text-field {
-    display: block;
-  }
+  margin-bottom: 15px;
 }
-
+.simple-generator__generator-teams {
+    .mdc-text-field { display: block; }
+}
 @media screen and (min-width: 400px) {
-  .team-text-field-list {
+  .simple-generator__generator-teams {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     grid-column-gap: 10px;
   }
+}
+.simple-generator__generator-team-input {
+  .mdc-text-field { display: block; }
+  .mdc-text-field-helper-text { display: none; }
+
+  margin-bottom: 15px;
 }

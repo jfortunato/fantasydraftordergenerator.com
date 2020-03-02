@@ -7,6 +7,13 @@ import Button from "@material/react-button";
 import {RouteComponentProps} from "react-router";
 import './SimpleGenerator.scss';
 import espnLogo from './importers/espn/espn-fantasy-football.png';
+import {Headline5} from "@material/react-typography";
+import DividerText from "./DividerText";
+import SlideUpContent from "./layout/SlideUpContent/SlideUpContent";
+import SlideUpContentHeading from "./layout/SlideUpContent/SlideUpContentHeading";
+import SlideUpContentBody from "./layout/SlideUpContent/SlideUpContentBody";
+import MaterialIcon from "@material/react-material-icon";
+import {TopAppBarIcon} from "@material/react-top-app-bar";
 
 interface SimpleGeneratorProps extends RouteComponentProps {}
 
@@ -14,6 +21,7 @@ interface SimpleGeneratorState {
     leagueName: string;
     teamNames: string[];
     showButtonLabel: boolean;
+    opacity: number;
 }
 
 class SimpleGenerator extends React.Component<SimpleGeneratorProps, SimpleGeneratorState> {
@@ -31,6 +39,7 @@ class SimpleGenerator extends React.Component<SimpleGeneratorProps, SimpleGenera
             leagueName: sessionStorage.getItem(SimpleGenerator.STORAGE_KEYS.LEAGUE_NAME) || SimpleGenerator.DEFAULT_LEAGUE_NAME,
             teamNames: JSON.parse(sessionStorage.getItem(SimpleGenerator.STORAGE_KEYS.TEAM_NAMES) || '[]'),
             showButtonLabel: false,
+            opacity: 0,
         };
     }
 
@@ -94,52 +103,58 @@ class SimpleGenerator extends React.Component<SimpleGeneratorProps, SimpleGenera
     render() {
         return (
             <>
-                <div id="simple-generator">
-                    <div className="importers">
-                        <div className="importers__item">
-                            <img src={espnLogo} alt="" className="importers__item-image" />
-                            <Button outlined onClick={() => this.props.history.push('/espn-importer')} className="importers__item-button">Import From ESPN</Button>
-                        </div>
-                    </div>
-
-                    <div className="generator">
-                        <div id="input-options">
-                            <LeagueNameField leagueName={this.state.leagueName} onLeagueNameChange={(newLeagueName: string) => this.saveLeagueName(newLeagueName)} />
-
-                            <Fab onClick={this.generateClicked} textLabel={this.state.showButtonLabel ? 'Generate' : ''} icon={<span className="material-icons">casino</span>}/>
-
-                            <Select
-                                enhanced
-                                // outlined
-                                label='How Many Teams?'
-                                value={this.state.teamNames.length.toString()}
-                                onEnhancedChange={this.onEnhancedChange}
-                            >
-                                <Option value=''>Select Number Of Teams</Option>
-                                <Option value='6'>6 Teams</Option>
-                                <Option value='8'>8 Teams</Option>
-                                <Option value='10'>10 Teams</Option>
-                                <Option value='12'>12 Teams</Option>
-                                <Option value='14'>14 Teams</Option>
-                                <Option value='16'>16 Teams</Option>
-                                <Option value='18'>18 Teams</Option>
-                                <Option value='20'>20 Teams</Option>
-                                {/*<Option value='0'>Custom # Of Teams</Option>*/}
-                            </Select>
-                        </div>
-
-                        <div className="team-text-field-list">
-                            {this.state.teamNames.map((teamName, index) =>
-                                <div className="team-text-field-container" key={index}>
-                                    <TeamTextField teamName={teamName} onTeamNameChange={(newTeamName: string) => this.updateTeamName(index, newTeamName)} />
+                <SlideUpContent>
+                    <SlideUpContentHeading logo={espnLogo} hasMenuToggle={true}>
+                        Fantasy Football<br />Draft Order Generator
+                    </SlideUpContentHeading>
+                    <SlideUpContentBody>
+                        <div id="simple-generator" className="simple-generator">
+                            <div className="simple-generator__app-content">
+                                <div className="simple-generator__importers">
+                                    <div className="simple-generator__importers-item">
+                                        <img src={espnLogo} alt="" className="simple-generator__importers-item-image" />
+                                        <Button raised onClick={() => this.props.history.push('/espn-importer')} className="simple-generator__importers-item-button">Import From ESPN</Button>
+                                    </div>
                                 </div>
-                            )}
+                                <div className="simple-generator__generator">
+                                    <div className="simple-generator__generator-inputs">
+                                        <div className="simple-generator__generator-input-league-name">
+                                            <LeagueNameField leagueName={this.state.leagueName} onLeagueNameChange={(newLeagueName: string) => this.saveLeagueName(newLeagueName)} />
+                                        </div>
+                                        <Fab className="simple-generator__generator-execute-button" onClick={this.generateClicked} textLabel={this.state.showButtonLabel ? 'Generate' : ''} icon={<span className="material-icons">casino</span>}/>
+                                        <div className="simple-generator__generator-input-number-teams">
+                                            <Select
+                                                enhanced
+                                                label='How Many Teams?'
+                                                value={this.state.teamNames.length.toString()}
+                                                onEnhancedChange={this.onEnhancedChange}
+                                            >
+                                                <Option value=''>Select Number Of Teams</Option>
+                                                <Option value='6'>6 Teams</Option>
+                                                <Option value='8'>8 Teams</Option>
+                                                <Option value='10'>10 Teams</Option>
+                                                <Option value='12'>12 Teams</Option>
+                                                <Option value='14'>14 Teams</Option>
+                                                <Option value='16'>16 Teams</Option>
+                                                <Option value='18'>18 Teams</Option>
+                                                <Option value='20'>20 Teams</Option>
+                                                {/*<Option value='0'>Custom # Of Teams</Option>*/}
+                                            </Select>
+                                        </div>
+
+                                    </div>
+                                    <div className="simple-generator__generator-teams">
+                                        {this.state.teamNames.map((teamName: string, index: number) =>
+                                            <div className="simple-generator__generator-team-input" key={index}>
+                                                <TeamTextField teamName={teamName} onTeamNameChange={(newTeamName: string) => this.updateTeamName(index, newTeamName)} />
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
-                    </div>
-
-
-                </div>
+                    </SlideUpContentBody>
+                </SlideUpContent>
             </>
         )
     }
