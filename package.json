@@ -48,6 +48,6 @@
     "@material/menu-surface": "^1.1.1",
     "@material/notched-outline": "^1.1.1",
     "@material/textfield": "^2.0.0",
-    "node-sass": "^4.12.0"
+    "node-sass": "^4.13.1"
   }
 }
